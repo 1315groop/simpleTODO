@@ -1,0 +1,17 @@
+# ide
+.idea
+
+# Django stuff:
+*.log
+db.sqlite3
+
+
+# Environments
+.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# pipenv
+Pipenv

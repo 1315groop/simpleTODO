@@ -15,3 +15,14 @@ venv.bak/
 
 # pipenv
 Pipenv
+
+#python staff
+__pycache__/
+*.py[cod]
+*$py.class
+
+#some future frontend staff
+/frontend/node_modules
+static
+node_modules
+.eslintcache

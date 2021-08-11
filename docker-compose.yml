@@ -20,6 +20,7 @@ services:
       - -c
       - |
         python manage.py collectstatic --no-input
+        python manage.py makemigrations
         python manage.py migrate
         python manage.py create_admin
         python manage.py runserver 0.0.0.0:8000
@@ -27,10 +28,7 @@ services:
     env_file:
       - simple_todo/local.env
     ports:
-      - target: 8000
-        published: 8000
-        protocol: tcp
-        mode: host
+      - "8000:8000"
     volumes:
       - ./simple_todo:/usr/src/simple_todo/
     depends_on:
@@ -58,6 +56,3 @@ services:
       - redis-data:/data
     networks:
       - network
-
-
-

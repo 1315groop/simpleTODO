@@ -1,19 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 # Create your models here.
-class Person(models.Model):
-    first_name = models.CharField(max_length=140)
-    last_name = models.CharField(max_length=140)
-    born = models.DateField()
-    died = models.DateField(null=True, blank=True)
+class Post(models.Model):
+    STATUS_CHOICES = (
+        ("completed", "Complited"),
+        ("active", "Active"),
+    )
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250, unique_for_date="publish")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blog_posts")
+    body = models.TextField()
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="completed")
 
     class Meta:
-        ordering = ("last_name", "first_name")
+        ordering = ("-publish",)
 
     def __str__(self):
-        if self.died:
-            return "{}, {} ({}-{})".format(
-                self.last_name, self.first_name, self.born, self.died
-            )
-        return "{}, {} ({})".format(self.last_name, self.first_name, self.born)
+        return self.title
